@@ -399,7 +399,7 @@ class CallkitNotificationManager(private val context: Context) {
                 Build.VERSION.SDK_INT < Build.VERSION_CODES.O
     }
 
-    private fun createNotificationChanel(
+    fun createNotificationChanel(
             incomingCallChannelName: String,
             missedCallChannelName: String,
     ) {
