@@ -430,30 +430,14 @@ class CallkitNotificationManager(private val context: Context) {
 
                 createNotificationChannel(channelCall)
 
-
-                var channelMisc = getNotificationChannel(FCM_FALLBACK_NOTIFICATION_CHANNEL)
-                if (channelMisc != null) {
-                    channelMisc.setSound(null, null)
-                } else {
-                    channelMisc = NotificationChannel(
+                if (getNotificationChannel(FCM_FALLBACK_NOTIFICATION_CHANNEL) == null) {
+                    createNotificationChannel(
+                        new NotificationChannel(
                             FCM_FALLBACK_NOTIFICATION_CHANNEL,
                             "Miscellaneous",
-                            NotificationManager.IMPORTANCE_HIGH
-                    ).apply {
-                        description = ""
-                        vibrationPattern =
-                                longArrayOf(0, 1000, 500, 1000, 500)
-                        lightColor = Color.RED
-                        enableLights(true)
-                        enableVibration(true)
-                        setSound(null, null)
-                    }
+                            NotificationManager.IMPORTANCE_DEFAULT));
                 }
-                channelMisc.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
 
-                channelMisc.importance = NotificationManager.IMPORTANCE_HIGH
-
-                createNotificationChannel(channelMisc)
 
                 val channelMissedCall = NotificationChannel(
                         NOTIFICATION_CHANNEL_ID_MISSED,
