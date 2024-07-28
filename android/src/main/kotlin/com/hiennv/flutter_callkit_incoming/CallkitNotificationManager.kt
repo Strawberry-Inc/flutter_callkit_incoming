@@ -43,6 +43,7 @@ class CallkitNotificationManager(private val context: Context) {
 
         private const val NOTIFICATION_CHANNEL_ID_INCOMING = "callkit_incoming_channel_id"
         private const val NOTIFICATION_CHANNEL_ID_MISSED = "callkit_missed_channel_id"
+        private const val FCM_FALLBACK_NOTIFICATION_CHANNEL = "fcm_fallback_notification_channel";
     }
 
     private lateinit var notificationBuilder: NotificationCompat.Builder
@@ -428,6 +429,31 @@ class CallkitNotificationManager(private val context: Context) {
                 channelCall.importance = NotificationManager.IMPORTANCE_HIGH
 
                 createNotificationChannel(channelCall)
+
+
+                var channelMisc = getNotificationChannel(FCM_FALLBACK_NOTIFICATION_CHANNEL)
+                if (channelMisc != null) {
+                    channelMisc.setSound(null, null)
+                } else {
+                    channelMisc = NotificationChannel(
+                            FCM_FALLBACK_NOTIFICATION_CHANNEL,
+                            "Miscellaneous",
+                            NotificationManager.IMPORTANCE_HIGH
+                    ).apply {
+                        description = ""
+                        vibrationPattern =
+                                longArrayOf(0, 1000, 500, 1000, 500)
+                        lightColor = Color.RED
+                        enableLights(true)
+                        enableVibration(true)
+                        setSound(null, null)
+                    }
+                }
+                channelMisc.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+
+                channelMisc.importance = NotificationManager.IMPORTANCE_HIGH
+
+                createNotificationChannel(channelMisc)
 
                 val channelMissedCall = NotificationChannel(
                         NOTIFICATION_CHANNEL_ID_MISSED,
