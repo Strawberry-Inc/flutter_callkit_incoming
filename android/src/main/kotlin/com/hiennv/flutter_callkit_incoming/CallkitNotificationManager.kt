@@ -434,7 +434,7 @@ class CallkitNotificationManager(private val context: Context) {
                     val channelMisc = NotificationChannel(
                         FCM_FALLBACK_NOTIFICATION_CHANNEL,
                         "Miscellaneous",
-                        NotificationManager.IMPORTANCE_DEFAULT)
+                        NotificationManager.IMPORTANCE_HIGH)
 
                     createNotificationChannel(channelMisc)
                 }
